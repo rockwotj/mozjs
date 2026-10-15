@@ -221,21 +221,6 @@ fn build_spidermonkey(build_dir: &Path) {
         .expect("DEP_NORMALIZER_GLUE_INCLUDE should be set by normalizer_glue");
     write!(cppflags, "-I{} ", include.replace("\\", "/")).unwrap();
 
-    if cfg!(feature = "intl") {
-        let include = env::var("DEP_UNICODE_BIDI_FFI_INCLUDE")
-            .expect("DEP_UNICODE_BIDI_FFI_INCLUDE should be set by unicode_bidi_ffi");
-        write!(cppflags, "-I{} ", include.replace("\\", "/")).unwrap();
-        let include = env::var("DEP_PROPERTIES_GLUE_INCLUDE")
-            .expect("DEP_PROPERTIES_GLUE_INCLUDE should be set by properties_glue");
-        write!(cppflags, "-I{} ", include.replace("\\", "/")).unwrap();
-        let include = env::var("DEP_COLLATOR_GLUE_INCLUDE")
-            .expect("DEP_COLLATOR_GLUE_INCLUDE should be set by collator_glue");
-        write!(cppflags, "-I{} ", include.replace("\\", "/")).unwrap();
-        let include = env::var("DEP_LOCALE_GLUE_INCLUDE")
-            .expect("DEP_LOCALE_GLUE_INCLUDE should be set by locale_glue");
-        write!(cppflags, "-I{} ", include.replace("\\", "/")).unwrap();
-    }
-
     cppflags.push(get_cc_rs_env_os("CPPFLAGS").unwrap_or_default());
     cmd.env("CPPFLAGS", cppflags);
 
@@ -523,10 +508,10 @@ fn should_build_from_source() -> bool {
         true
     } else if env::var_os("MOZJS_ARCHIVE").is_some() {
         false
-    } else if env::var_os("CARGO_FEATURE_INTL").is_none() {
-        println!("intl feature is disabled. Building from source directly.");
-        true
-    } else if !env::var_os("CARGO_FEATURE_JIT").is_some() {
+    } else if env::var_os("CARGO_FEATURE_JIT").is_none()
+        && !env::var("TARGET").unwrap().starts_with("wasm32")
+    {
+        // SpiderMonkey has no JIT in wasm, so wasm archives serve builds with or without it.
         println!("jit feature is NOT enabled. Building from source directly.");
         true
     } else if env::var_os("CARGO_FEATURE_JITSPEW").is_some() {
@@ -1246,7 +1231,8 @@ mod archive {
     /// Download the SpiderMonkey archive with cURL using the provided base URL. If it's None,
     /// it will use `servo/mozjs`'s release page as the base URL.
     pub(crate) fn download_archive(base: Option<&str>) -> Result<PathBuf, std::io::Error> {
-        let base = base.unwrap_or("https://github.com/servo/mozjs/releases");
+        // This fork publishes its own archives, built without the Intl API.
+        let base = base.unwrap_or("https://github.com/rockwotj/mozjs/releases");
         let version = env::var("CARGO_PKG_VERSION").unwrap();
         let archive_path = PathBuf::from(env::var_os("OUT_DIR").unwrap()).join(&archive());
 

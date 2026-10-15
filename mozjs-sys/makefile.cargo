@@ -19,9 +19,8 @@ ifneq (,$(CARGO_FEATURE_JITSPEW))
     CONFIGURE_FLAGS += --enable-jitspew
 endif
 
-ifeq (,$(CARGO_FEATURE_INTL))
-    CONFIGURE_FLAGS += --without-intl-api
-endif
+# This fork always builds without the Intl API (ICU).
+CONFIGURE_FLAGS += --without-intl-api
 
 ifneq (,$(CARGO_FEATURE_DEBUGMOZJS))
 	CONFIGURE_FLAGS += --enable-debug --enable-gczeal

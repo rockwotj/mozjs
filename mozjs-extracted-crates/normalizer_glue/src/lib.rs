@@ -232,60 +232,14 @@ fn normalize_utf16(form: NormalizationForm, input: &[u16], buffer: &mut Buffer) 
 }
 
 fn normalize_latin1(form: NormalizationForm, input: &[u8], buffer: &mut Buffer) -> bool {
-    let (head, tail) = match form {
-        NormalizationForm::NFKC => icu_normalizer::latin1::split_normalized_nfkc(input),
-        NormalizationForm::NFD => icu_normalizer::latin1::split_normalized_nfd(input),
-        NormalizationForm::NFKD => icu_normalizer::latin1::split_normalized_nfkd(input),
-        NormalizationForm::NFC => {
-            unreachable!("NFC should have been handled already");
-        }
-    };
-    if tail.is_empty() {
-        return true;
-    }
-    // We make an effort to do a fallible allocation...
-    if !maybe_reserve_buffer_space(form, input.len(), tail.len(), buffer) {
+    // Upstream icu_normalizer has no Latin-1 entry points, so the input is widened to UTF-16.
+    // The caller handles NFC, under which Latin-1 is always its own normalization.
+    let mut wide: Buffer = Buffer::new();
+    if wide.try_reserve_exact(input.len()).is_err() {
         return false;
     }
-    assert!(head.len() <= buffer.capacity());
-    unsafe {
-        // SAFETY: We have enough capacity. Exposure of slice of uninitialized
-        // of integers for writing should be OK in practice:
-        // https://github.com/hsivonen/encoding_rs/issues/79#issuecomment-1211870361
-        //
-        // For long term, see https://doc.rust-lang.org/std/vec/struct.Vec.html#method.spare_capacity_mut.
-        buffer.set_len(head.len());
-    }
-    encoding_rs::mem::convert_latin1_to_utf16(head, buffer);
-    let mut expansion_buffer: Buffer = Buffer::new();
-    if expansion_buffer.try_reserve_exact(tail.len()).is_err() {
-        return false;
-    }
-    unsafe {
-        // SAFETY: We have enough capacity. Exposure of slice of uninitialized
-        // of integers for writing should be OK in practice:
-        // https://github.com/hsivonen/encoding_rs/issues/79#issuecomment-1211870361
-        //
-        // For long term, see https://doc.rust-lang.org/std/vec/struct.Vec.html#method.spare_capacity_mut.
-        expansion_buffer.set_len(tail.len());
-    }
-    encoding_rs::mem::convert_latin1_to_utf16(tail, &mut expansion_buffer);
-    let r = match form {
-        NormalizationForm::NFKC => {
-            icu_normalizer::latin1::normalize_nfkc_to(&expansion_buffer, buffer)
-        }
-        NormalizationForm::NFD => {
-            icu_normalizer::latin1::normalize_nfd_to(&expansion_buffer, buffer)
-        }
-        NormalizationForm::NFKD => {
-            icu_normalizer::latin1::normalize_nfkd_to(&expansion_buffer, buffer)
-        }
-        NormalizationForm::NFC => {
-            unreachable!("NFC should have been handled already");
-        }
-    };
-    debug_assert!(r.is_ok());
-    true
+    wide.extend(input.iter().map(|&b| u16::from(b)));
+    normalize_utf16(form, &wide, buffer)
 }
 
 // The items below are not used by SpiderMonkey but are offered through headers that

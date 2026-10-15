@@ -1,0 +1,9 @@
+/private/tmp/claude-501/-Users-rockwood-code-alfred--claude-worktrees-wasm-runtime-winter-tc-e2fd8a/d05ef0cd-dc9c-4515-b6c8-60808c04caf6/scratchpad/mozjs-fork/mozjs-extracted-crates/normalizer_glue/target/debug/deps/clap-56aae17d673e6d6b.d: /Users/rockwood/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clap-4.6.7/src/lib.rs /Users/rockwood/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clap-4.6.7/src/../examples/demo.rs /Users/rockwood/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clap-4.6.7/src/../examples/demo.md
+
+/private/tmp/claude-501/-Users-rockwood-code-alfred--claude-worktrees-wasm-runtime-winter-tc-e2fd8a/d05ef0cd-dc9c-4515-b6c8-60808c04caf6/scratchpad/mozjs-fork/mozjs-extracted-crates/normalizer_glue/target/debug/deps/libclap-56aae17d673e6d6b.rlib: /Users/rockwood/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clap-4.6.7/src/lib.rs /Users/rockwood/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clap-4.6.7/src/../examples/demo.rs /Users/rockwood/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clap-4.6.7/src/../examples/demo.md
+
+/private/tmp/claude-501/-Users-rockwood-code-alfred--claude-worktrees-wasm-runtime-winter-tc-e2fd8a/d05ef0cd-dc9c-4515-b6c8-60808c04caf6/scratchpad/mozjs-fork/mozjs-extracted-crates/normalizer_glue/target/debug/deps/libclap-56aae17d673e6d6b.rmeta: /Users/rockwood/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clap-4.6.7/src/lib.rs /Users/rockwood/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clap-4.6.7/src/../examples/demo.rs /Users/rockwood/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clap-4.6.7/src/../examples/demo.md
+
+/Users/rockwood/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clap-4.6.7/src/lib.rs:
+/Users/rockwood/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clap-4.6.7/src/../examples/demo.rs:
+/Users/rockwood/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/clap-4.6.7/src/../examples/demo.md:

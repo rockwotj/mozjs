@@ -1,0 +1,7 @@
+/private/tmp/claude-501/-Users-rockwood-code-alfred--claude-worktrees-wasm-runtime-winter-tc-e2fd8a/d05ef0cd-dc9c-4515-b6c8-60808c04caf6/scratchpad/mozjs-fork/mozjs-extracted-crates/normalizer_glue/target/debug/deps/yoke_derive-d875815a164e17ba.d: /Users/rockwood/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/yoke-derive-0.8.4/src/lib.rs /Users/rockwood/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/yoke-derive-0.8.4/src/lifetimes.rs /Users/rockwood/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/yoke-derive-0.8.4/src/visitor.rs
+
+/private/tmp/claude-501/-Users-rockwood-code-alfred--claude-worktrees-wasm-runtime-winter-tc-e2fd8a/d05ef0cd-dc9c-4515-b6c8-60808c04caf6/scratchpad/mozjs-fork/mozjs-extracted-crates/normalizer_glue/target/debug/deps/libyoke_derive-d875815a164e17ba.dylib: /Users/rockwood/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/yoke-derive-0.8.4/src/lib.rs /Users/rockwood/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/yoke-derive-0.8.4/src/lifetimes.rs /Users/rockwood/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/yoke-derive-0.8.4/src/visitor.rs
+
+/Users/rockwood/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/yoke-derive-0.8.4/src/lib.rs:
+/Users/rockwood/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/yoke-derive-0.8.4/src/lifetimes.rs:
+/Users/rockwood/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/yoke-derive-0.8.4/src/visitor.rs:
