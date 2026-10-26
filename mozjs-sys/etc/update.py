@@ -178,6 +178,40 @@ def extract_tarball(tarball, commit):
                     '[dev-dependencies.atoi]\nversion = "2.0.0"',
                 )
 
+            if crate_name == "icu_normalizer":
+                # Drop the optional icu_properties dependency. SpiderMonkey never enables it,
+                # but Cargo still locks optional dependencies referenced through weak
+                # `icu_properties?/...` features, so its `~` requirement would pin
+                # icu_properties for every crate that depends on mozjs.
+                cargo_toml_contents = re.sub(
+                    r'^\[dependencies\.icu_properties\]\n(?:[^\[\n].*\n)*\n?',
+                    "",
+                    cargo_toml_contents,
+                    flags=re.MULTILINE,
+                )
+                cargo_toml_contents = re.sub(
+                    r'^icu_properties = \["dep:icu_properties"\]\n',
+                    "",
+                    cargo_toml_contents,
+                    flags=re.MULTILINE,
+                )
+                cargo_toml_contents = re.sub(
+                    r'^    "icu_properties(\?/[a-z_]+)?",\n',
+                    "",
+                    cargo_toml_contents,
+                    flags=re.MULTILINE,
+                )
+                assert "icu_properties" not in cargo_toml_contents
+                # The source still has `cfg(feature = "icu_properties")` blocks, which are now
+                # always off.
+                cargo_toml_contents, count = re.subn(
+                    r'^(\[lints\.rust\.unexpected_cfgs\]\n(?:.*\n)*?check-cfg = \[)',
+                    r"""\1'cfg(feature, values("icu_properties"))', """,
+                    cargo_toml_contents,
+                    flags=re.MULTILINE,
+                )
+                assert count == 1
+
             if crate_name == "properties_glue":
                 cargo_toml_contents = cargo_toml_contents.replace(
                     "icu_collections = { ",

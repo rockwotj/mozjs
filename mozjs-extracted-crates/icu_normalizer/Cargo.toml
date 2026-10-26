@@ -44,16 +44,13 @@ all-features = true
 [features]
 compiled_data = [
     "dep:icu_normalizer_data",
-    "icu_properties?/compiled_data",
     "icu_provider/baked",
 ]
 datagen = [
     "serde",
     "dep:databake",
-    "icu_properties",
     "icu_collections/databake",
     "zerovec/databake",
-    "icu_properties?/datagen",
     "icu_provider/export",
 ]
 default = [
@@ -62,12 +59,10 @@ default = [
     "utf16_iter",
 ]
 experimental = []
-icu_properties = ["dep:icu_properties"]
 serde = [
     "dep:serde",
     "icu_collections/serde",
     "zerovec/serde",
-    "icu_properties?/serde",
     "icu_provider/serde",
 ]
 utf16_iter = [
@@ -152,11 +147,6 @@ path = "../icu_normalizer_data"
 optional = true
 default-features = false
 
-[dependencies.icu_properties]
-version = "~2.1.1"
-optional = true
-default-features = false
-
 [dependencies.icu_provider]
 version = "2.1.1"
 default-features = false
@@ -227,4 +217,4 @@ version = "0.5.0"
 [lints.rust.unexpected_cfgs]
 level = "warn"
 priority = 0
-check-cfg = ["cfg(icu4x_unstable_fast_trie_only)"]
+check-cfg = ['cfg(feature, values("icu_properties"))', "cfg(icu4x_unstable_fast_trie_only)"]
